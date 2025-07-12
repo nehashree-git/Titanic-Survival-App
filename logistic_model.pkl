@@ -1,0 +1,77 @@
+{
+ "cells": [
+  {
+   "cell_type": "code",
+   "execution_count": 1,
+   "id": "47537cc0-dddb-48b4-8d0f-ec27c9570bc3",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "✅ logistic_model.pkl created successfully.\n"
+     ]
+    }
+   ],
+   "source": [
+    "# Step 1: Train and Save Logistic Model Properly\n",
+    "import pandas as pd\n",
+    "from sklearn.linear_model import LogisticRegression\n",
+    "from sklearn.model_selection import train_test_split\n",
+    "import pickle\n",
+    "\n",
+    "# Load Titanic data\n",
+    "df = pd.read_csv(\"Titanic_train.csv\")\n",
+    "\n",
+    "# Keep only required columns\n",
+    "df = df[[\"Pclass\", \"Sex\", \"Age\", \"SibSp\", \"Parch\", \"Fare\", \"Embarked\", \"Survived\"]]\n",
+    "\n",
+    "# Drop missing values\n",
+    "df.dropna(inplace=True)\n",
+    "\n",
+    "# Encoding\n",
+    "df['Sex'] = df['Sex'].map({'male': 1, 'female': 0})\n",
+    "df['Embarked'] = df['Embarked'].map({'S': 2, 'C': 0, 'Q': 1})\n",
+    "\n",
+    "# Split into features and target\n",
+    "X = df.drop(\"Survived\", axis=1)\n",
+    "y = df[\"Survived\"]\n",
+    "\n",
+    "# Train/test split\n",
+    "X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)\n",
+    "\n",
+    "# Train logistic regression model\n",
+    "model = LogisticRegression()\n",
+    "model.fit(X_train, y_train)\n",
+    "\n",
+    "# Save model to file\n",
+    "with open(\"logistic_model.pkl\", \"wb\") as f:\n",
+    "    pickle.dump(model, f)\n",
+    "\n",
+    "print(\"✅ logistic_model.pkl created successfully.\")\n"
+   ]
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python [conda env:base] *",
+   "language": "python",
+   "name": "conda-base-py"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.12.3"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 5
+}
