@@ -4,7 +4,7 @@ import pickle
 import pandas as pd
 
 # Load model
-with open("logistic_model.pkl", "rb") as f:
+with open("Logistic_regression_assgn-7.ipynb", "rb") as f:
     model = pickle.load(f)
 
 st.title("🚢 Titanic Survival Predictor")
